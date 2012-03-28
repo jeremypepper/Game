@@ -1,0 +1,61 @@
+<!-- Lets talk about geddy -->
+<div class="hero-unit geddy-welcome-box">
+  <h1>&#175;\\_(ツ)_/&#175;</h1>
+  <p>Yup, there should be a game here... someday</p>
+</div>
+
+<div class="hero-unit" id="userarea">
+  <form action="/users" method="POST">
+  	<h2>Name</h2>
+    <input type="text" class="span6" name="name">
+    <input type="submit" class="btn btn-primary">
+  </form>
+</div>
+<div class="hero-unit">
+	<ul id="friends"></ul>
+</div>
+<script type="text/javascript">
+var name;
+var otherName;
+function getUsers(){
+	$.getJSON("/users.json",function(data){
+		$("#friends").empty();
+		for (var i = 0; i < data.users.length; i++) {
+			var user = data.users[i];
+			$("#friends").append($("<li><a href='#'>"+user.name +"</a></li>"));
+		};
+	});
+}
+function getGames(){
+	$.get("/games?user="+name);
+}
+$("#userarea form").submit(function(e){
+	e.preventDefault();
+	name = $(this).find("input[type='text']").val();
+	var formdata = {"name":name};
+	$.getJSON("/users/" + name + ".json",function(data){
+		if(data && data.user && data.user.id)
+		{
+			getUsers();
+		}
+		else
+		{
+			$.post("/users", formdata,function(data){
+				getUsers();
+			});
+		}
+	});
+});
+
+$("friends a").live("click",function(){
+	otherName = $(this).text();
+	$.get("/games");
+	/*$.post("/games",
+		{
+	  		drawFriend: name
+	  		, answerFriend: otherName
+		}
+		function(data){}
+	)*/
+});
+</script>

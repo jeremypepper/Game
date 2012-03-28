@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Draw!";
+}
+<form id="nameform">
+    Name:
+    <input id="nametextarea" value="User" />
+    <input id="okname" type="submit" value="OK" />
+</form>
+<div id="gamelist" class="none">
+</div>
+<div id="drawarea" class="none">
+    <h2 id="wordtitle">
+    </h2>
+    <canvas width="320" height="240" id="thecanvas"></canvas>
+    <div id="drawtools" class="none">
+        <a id="red" href="#"></a><a id="blue" href="#"></a><a id="complete" href="#">complete</a>
+    </div>
+</div>
+<form id="guessform" class="none">
+    Guess:
+    <input id="guesstext" value="" />
+    <input id="okguess" type="submit" value="OK" />
+</form>
+<script>
+    var $canvas = $('#thecanvas'),
+        $nameform = $('#nameform'),
+        $gamelist = $('#gamelist'),
+        $drawarea = $('#drawarea'),
+        $guessform = $('#guessform'),
+        $drawtools = $('#drawtools'),
+        $areas = $nameform.add($gamelist).add($drawarea).add($guessform).add($drawtools);
+    var ctx = $canvas[0].getContext('2d');
+    var WIDTH = $canvas.width();
+    var HEIGHT = $canvas.height();
+    var buffer = [];
+    var lastPoint = [];
+    var isDown;
+
+    function hideAllBut($selected) {
+        $areas.not($selected).hide();
+        $selected.show();
+    }
+    window.onmousedown = function () {
+        isDown = 1;
+    };
+    window.onmouseup = function () {
+        isDown = 0;
+        lastPoint = [];
+    };
+    $canvas.mousemove(function (e) {
+        var offsetX = $canvas.position().left * -1;
+        var offsetY = $canvas.position().top * -1;
+        var point = [e.pageX + offsetX, e.pageY + offsetY]
+        if (isDown) {
+            if (!lastPoint)
+                lastPoint = point;
+            buffer.push({ c: "l", p1: lastPoint, p2: point });
+            ctx.beginPath();
+            ctx.moveTo(lastPoint[0], lastPoint[1]);
+            ctx.lineTo(point[0], point[1]);
+            ctx.stroke();
+            lastPoint = point;
+        }
+    });
+
+    window.onkeydown = function (e) {
+        var keyActionsDown = {
+            37: function () { player.isLeft = 1 },
+            38: function () { player.isUp = 1; player.JumpTime = 100; },
+            39: function () { player.isRight = 1 },
+            40: function () { player.isDown = 1 }
+        };
+        var action = keyActionsDown[e.keyCode];
+        if (action)
+            action();
+    };
+
+    window.onkeyup = function (e) {
+        var keyActionsUp = {
+            37: function () { player.isLeft = 0 },
+            38: function () { player.isUp = 0 },
+            39: function () { player.isRight = 0 },
+            40: function () { player.isDown = 0 }
+        };
+        var action = keyActionsUp[e.keyCode];
+        if (action)
+            action();
+    };
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    function changeColor(colorDef) {
+        buffer.push({ c: "c", cd: colorDef });
+        ctx.strokeStyle = colorDef;
+    }
+    document.getElementById("red").onclick = function () {
+        changeColor("red");
+    }
+    document.getElementById("blue").onclick = function () {
+        changeColor("blue");
+    }
+    $("#complete").click(function () {
+        $.post("/game/complete?id=" + game.Id, { drawData: JSON.stringify(buffer) }, function (data) {
+            if (data && data.Success == true) {
+                hideAllBut($gamelist)
+            }
+            else {
+                alert("error posting");
+            }
+        });
+    });
+
+    function drawIt(drawData) {
+        var ctx = $canvas[0].getContext('2d');
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, 10000, 10000);
+        var timeOffset = 0, timeStep = 20;
+        for (var i = 0; i < drawData.length; i++) {
+            var chunk = drawData[i];
+            if (chunk.c === "l") {
+                (function (chunk) {
+                    window.setTimeout(function () {
+                        ctx.beginPath();
+                        ctx.moveTo(chunk.p1[0], chunk.p1[1]);
+                        ctx.lineTo(chunk.p2[0], chunk.p2[1]);
+                        ctx.stroke();
+                    }, timeOffset);
+                })(chunk);
+
+            }
+            else if (chunk.c === "c") {
+                (function (chunk) {
+                    window.setTimeout(function () {
+                        ctx.strokeStyle = chunk.cd;
+                    }, timeOffset);
+                })(chunk);
+            }
+            timeOffset += timeStep;
+        };
+    }
+
+    function startAnswerGame(drawData) {
+        drawIt(drawData);
+    }
+
+    var game;
+
+    function startDrawGame() {
+        if (game) {
+            $("#wordtitle").text(game.Word);
+        }
+    }
+
+    function newGame(drawName, friendName) {
+        // get a new game
+        $.getJSON("/game/create", { drawFriend: drawName, answerFriend: friendName }, function (data) {
+            game = data;
+            startDrawGame();
+        });
+    }
+
+    $nameform.submit(function (event) {
+        event.preventDefault();
+        currentName = $("#nametextarea").val();
+        $.getJSON("/game/games?name=" + currentName, function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var game = data[i];
+                var friendName = game.DrawFriend == currentName ? game.AnswerFriend : game.DrawFriend;
+                if (currentName == game.DrawFriend && game.Drawing) {
+                    $link = $("<span>" + friendName + "</span>");
+                }
+                else {
+                    $link = $("<a href='#' >" + friendName + "</a>");
+                }
+                $link.data("game", game);
+                $gamelist.html("").append($link);
+                hideAllBut($gamelist);
+            }
+        });
+    });
+    $guessform.submit(function (event) {
+        event.preventDefault();
+        var guess = $("#guesstext").val();
+        $.getJSON("/game/complete", { "id": game.Id, "guess": guess }, function (data) {
+            alert(data.Success);
+            if (data && data.Success) {
+                hideAllBut($gamelist);
+            }
+        });
+    });
+    $gamelist.find("a").live("click", function (event) {
+        event.preventDefault();
+        game = $(this).data("game");
+        hideAllBut($drawarea);
+        if (game.Id === "00000000-0000-0000-0000-000000000000") {
+            newGame(game.DrawFriend, game.AnswerFriend);
+            $drawtools.show();
+        }
+        else if (game.DrawFriend && !game.Drawing) {
+            startDrawGame();
+            $drawtools.show();
+        }
+        else if (game.Drawing) {
+            startAnswerGame(JSON.parse(game.Drawing));
+            $guessform.show();
+        }
+
+    });
+    
+</script>

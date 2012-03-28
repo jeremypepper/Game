@@ -1,0 +1,17 @@
+<div class="hero-unit">
+  <h2>Game List</h2>
+  <a href="/games/add" class="btn pull-right">Create a new Game</a>
+</div>
+
+<% if (games && games.length) { %>
+  <% for (var i in games) { %>
+  <div class="row game-item">
+    <div class="span8">
+      <h3>
+        <a href="/games/<%= games[i].id; %>"><%= games[i].id; %></a>
+      </h3>
+    </div>
+  </div>
+  <% } %>
+
+<% } %>

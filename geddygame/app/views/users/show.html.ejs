@@ -1,0 +1,10 @@
+<div class="hero-unit">
+  <h3><%=user.name %></h3>
+  <ul>
+  <% for (var p in user) {
+  		if(typeof(user[p])!=="function" ){
+   %>
+    <li><%= p + ': ' + user[p]; %></li>
+  <% }} %>
+  </ul>
+</div>
