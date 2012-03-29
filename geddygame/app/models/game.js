@@ -4,6 +4,7 @@ var Game = function () {
   , drawFriend:   {type: 'string', required: true}
   , answerFriend:   {type: 'string', required: true}
   , state:   {type: 'number', required: true}
+  , drawData: {type: 'string', required: false}
   });
   
   this.validatesPresent('id');

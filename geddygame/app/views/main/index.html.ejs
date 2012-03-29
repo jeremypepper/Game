@@ -12,17 +12,43 @@
   </form>
 </div>
 <div class="hero-unit">
+	<h3>Games<h3>
+	<ul id="games"></ul>
+	<h3>Friends<h3>
 	<ul id="friends"></ul>
+</div>
+<div id="drawarea" class="hero-unit none">
+    <h2 id="wordtitle"></h2>
+    <canvas width="320" height="240" id="thecanvas"></canvas>
+    <div id="drawtools" class="none">
+        <a id="red" href="#"></a><a id="blue" href="#"></a><a id="complete" href="#">complete</a>
+    </div>
+</div>
 </div>
 <script type="text/javascript">
 var name;
 var otherName;
+var buffer =[];
+var $canvas = $("#thecanvas");
+var ctx = $canvas[0].getContext('2d');
+
 function getUsers(){
-	$.getJSON("/users.json",function(data){
+	// actually get games and users
+	$.getJSON("/gamesAndFriends",function(data){
 		$("#friends").empty();
-		for (var i = 0; i < data.users.length; i++) {
-			var user = data.users[i];
+		for (var i = 0; i < data.friends.length; i++) {
+			var user = data.friends[i];
 			$("#friends").append($("<li><a href='#'>"+user.name +"</a></li>"));
+		};
+		
+		$("#games").empty();
+		for (var i = 0; i < data.games.length; i++) {
+			var game = data.games[i];
+			var $li = $("<li>");
+			var $a = $("<a href='#'>"+game.drawFriend +" -> "+ game.answerFriend +"</a>").data("game", game);
+			$li.append($a);
+			$("#games").append($li);
+				
 		};
 	});
 }
@@ -47,18 +73,65 @@ $("#userarea form").submit(function(e){
 	});
 });
 
-$("#friends a").live("click",function(){
-	otherName = $(this).text();
-	postMessage ={
-	  		drawFriend: name
-	  		, answerFriend: otherName
-		};
-	$.get("/games/intern.json",
-		postMessage,
-		function(data){
-			if(console){console.log(data);}
-			else{alert(data);}
-		}
-	)
+
+function startGame(game){
+	alert("this is the part where we start the game with" + game.drawFriend +"," + game.answerFriend);
+	$("#wordtitle").text(game.drawFriend + "->" + game.answerFriend);
+	$("#drawarea,#drawtools").show().data("game",game);
+}
+
+$("#friends a, #games a").live("click",function(){
+	var $this = $(this);
+	var game = $this.data("game");
+	if(game){
+		startGame(game);
+	}
+	else{
+		otherName = $this.text();
+		postMessage ={
+		  		drawFriend: name
+		  		, answerFriend: otherName
+			};
+		$.get("/games/intern.json",
+			postMessage,
+			function(data){
+				if(data && data.game)
+					startGame(data.game);
+				else
+					alert("error");
+			}
+		)
+	}
+});
+
+window.onmousedown = function () {
+    isDown = 1;
+};
+window.onmouseup = function () {
+    isDown = 0;
+    lastPoint = [];
+};
+$canvas.mousemove(function (e) {
+    var offsetX = $canvas.position().left * -1;
+    var offsetY = $canvas.position().top * -1;
+    var point = [e.pageX + offsetX, e.pageY + offsetY]
+    if (isDown) {
+        if (!lastPoint)
+            lastPoint = point;
+        buffer.push({ c: "l", p1: lastPoint, p2: point });
+        ctx.beginPath();
+        ctx.moveTo(lastPoint[0], lastPoint[1]);
+        ctx.lineTo(point[0], point[1]);
+        ctx.stroke();
+        lastPoint = point;
+    }
+});
+
+$("#complete").click(function(){
+	var game = $("#drawarea").data("game");
+	$.ajax("/games/update?id="+game.id, 
+		{ data: JSON.stringify(buffer),
+		  type: "PUT"
+		});
 });
 </script>

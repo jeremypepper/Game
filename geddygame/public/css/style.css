@@ -29,3 +29,28 @@ body {
 .geddy-welcome-box .btn-large {
   margin-top: 20px;
 }
+div.none,span.none
+{
+  display: none;
+}
+
+canvas{
+  border:1px black solid;
+  cursor:crosshair;
+}
+#drawtools a
+{
+  width:20px;
+  height:10px;
+  border:1px #EEE solid;
+  display:block;
+}
+#red
+{
+  background-color:red;
+}
+#blue
+{
+  background-color:blue;
+}
+.none{display:none;}

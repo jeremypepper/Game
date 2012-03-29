@@ -23,6 +23,14 @@ var Main = function () {
     , template: 'app/views/main/index'
     });
   };
+  this.gamesAndFriends = function (req, resp, params) {
+    this.respondsWith = ['json'];
+    this.respond(
+    {
+      	games: geddy.games
+      , friends: geddy.users
+    });
+  };
 };
 
 exports.Main = Main;

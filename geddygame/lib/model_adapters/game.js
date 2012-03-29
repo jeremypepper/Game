@@ -4,6 +4,16 @@ var Game = new (function () {
 		geddy.db.SaveGame(game);		
 		geddy.games.push(game);
 	};
+	this.update = function(id,drawData,callback){
+		geddy.model.Game.load(id,function(game){
+			if(game)
+			{
+				game.drawData = drawData;
+			}
+
+			callback(game);
+		});
+	}
 	this.load = function(match,callback){
 		var validator;
 		geddy.log.info("match type is  "+typeof(match));;

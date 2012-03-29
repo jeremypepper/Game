@@ -11,22 +11,13 @@ var Games = function () {
   };
 
   this.create = function (req, resp, params) {
-    var self = this;
-    geddy.log.info("loading");
-    // check to see if exists first
-    geddy.model.Game.load(params,function(game){
-    geddy.log.info("loaded");
-    geddy.log.info("game is " + game);
-    geddy.log.info(!!game);
-    if(!game)
-    {
-      geddy.log.info("create a resource");
       // Save the resource, then display index page
       game = geddy.model.Game.create(
       { 
         id: geddy.string.uuid(10),
         drawFriend: params.drawFriend,
         answerFriend:params.answerFriend,
+        drawData: null,
         state: 0
       });
 
@@ -35,11 +26,8 @@ var Games = function () {
       } else {
         self.redirect({controller: self.name, action: 'add?error=true'});
       }
-    }
-    
     //self.redirect({controller: self.name, id: game.id});
     self.redirect("/games/"+game.id);
-    });
   };
 
   this.show = function (req, resp, params) {
@@ -56,7 +44,12 @@ var Games = function () {
 
   this.update = function (req, resp, params) {
     // Save the resource, then display the item page
-    this.redirect({controller: this.name, id: params.id});
+    geddy.log.info("ID:" + params.id);
+    geddy.log.info("drawData:" + params.drawData);
+    var self = this;
+    geddy.model.Game.update(params.id, params.drawData, function(game){
+      self.redirect({controller: this.name, id: params.id});
+    });
   };
 
   this.remove = function (req, resp, params) {

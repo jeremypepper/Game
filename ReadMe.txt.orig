@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+whattup
+=======
+Hello there!
+
+Setup:
+
+- Install node.js
+- run: npm install -f jake geddy
+- run: npm install mongodb
+>>>>>>> 158cec08ebef686bb1802d07ba56a4f666d4dea5
