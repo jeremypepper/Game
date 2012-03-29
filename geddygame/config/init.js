@@ -11,3 +11,4 @@ geddy.users = [];
 geddy.model.adapter = {};
 geddy.model.adapter.Game = require(process.cwd() + '/lib/model_adapters/game').Game;
 geddy.model.adapter.User = require(process.cwd() + '/lib/model_adapters/user').User;
+geddy.db = require(process.cwd() + '/lib/database/mongodb').MongoDb;

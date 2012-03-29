@@ -1,7 +1,7 @@
 var Game = new (function () {
 	this.save = function(game){
 		game.saved = true;
-		// todo: ryan we will want to actually save this into a db here
+		geddy.db.SaveGame(game);		
 		geddy.games.push(game);
 	};
 	this.load = function(match,callback){
