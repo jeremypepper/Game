@@ -1,0 +1,7 @@
+C:\src\JeremyRyanGame\Game\Game\bin\Game.dll
+C:\src\JeremyRyanGame\Game\Game\bin\Game.pdb
+C:\src\JeremyRyanGame\Game\Game\bin\EntityFramework.dll
+C:\src\JeremyRyanGame\Game\Game\bin\EntityFramework.xml
+C:\src\JeremyRyanGame\Game\Game\obj\Debug\ResolveAssemblyReference.cache
+C:\src\JeremyRyanGame\Game\Game\obj\Debug\Game.dll
+C:\src\JeremyRyanGame\Game\Game\obj\Debug\Game.pdb

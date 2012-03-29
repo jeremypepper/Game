@@ -5,6 +5,16 @@ var Game = function () {
   , answerFriend:   {type: 'string', required: true}
   , state:   {type: 'number', required: true}
   });
+  
+  this.validatesPresent('id');
+  this.validatesPresent('drawFriend');
+  this.validatesLength('drawFriend', {min: 2});
+  this.validatesPresent('answerFriend');
+  this.validatesLength('answerFriend', {min: 2});
+
+  this.validatesWithFunction('state', function (status) {
+  	return status === 0 || status === 1 || status === 2;
+  });
 };
 
 /*

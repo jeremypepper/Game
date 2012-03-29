@@ -47,15 +47,18 @@ $("#userarea form").submit(function(e){
 	});
 });
 
-$("friends a").live("click",function(){
+$("#friends a").live("click",function(){
 	otherName = $(this).text();
-	$.get("/games");
-	/*$.post("/games",
-		{
+	postMessage ={
 	  		drawFriend: name
 	  		, answerFriend: otherName
+		};
+	$.get("/games/intern.json",
+		postMessage,
+		function(data){
+			if(console){console.log(data);}
+			else{alert(data);}
 		}
-		function(data){}
-	)*/
+	)
 });
 </script>

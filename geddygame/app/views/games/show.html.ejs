@@ -1,8 +1,9 @@
 <div class="hero-unit">
-  <h3>Params</h3>
-  <ul>
-  <% for (var p in params) { %>
+    <ul>
+  <% for (var p in params) {
+  		if(typeof(params[p])!=="function" ){
+   %>
     <li><%= p + ': ' + params[p]; %></li>
-  <% } %>
+  <% }} %>
   </ul>
 </div>

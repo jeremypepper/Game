@@ -1,0 +1,8 @@
+C:\src\JeremyRyanGame\Game\Game.Tests\bin\Debug\Game.Tests.dll.config
+C:\src\JeremyRyanGame\Game\Game.Tests\bin\Debug\Game.Tests.dll
+C:\src\JeremyRyanGame\Game\Game.Tests\bin\Debug\Game.Tests.pdb
+C:\src\JeremyRyanGame\Game\Game.Tests\bin\Debug\Game.dll
+C:\src\JeremyRyanGame\Game\Game.Tests\bin\Debug\Game.pdb
+C:\src\JeremyRyanGame\Game\Game.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\src\JeremyRyanGame\Game\Game.Tests\obj\Debug\Game.Tests.dll
+C:\src\JeremyRyanGame\Game\Game.Tests\obj\Debug\Game.Tests.pdb

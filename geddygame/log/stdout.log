@@ -1,4 +1,4 @@
-[Wed, 28 Mar 2012 08:14:11 GMT] INFO Server starting with config: {
+[Thu, 29 Mar 2012 05:28:40 GMT] INFO Server starting with config: {
   "environment": "development",
   "workers": 1,
   "port": 4000,
@@ -32,7 +32,22 @@
   "detailedErrors": true,
   "hostname": null
 }
-[Wed, 28 Mar 2012 08:14:11 GMT] INFO Creating 1 worker process.
-[Wed, 28 Mar 2012 08:14:11 GMT] INFO Server worker running in development on port 4000 with a PID of: 6036
-[Wed, 28 Mar 2012 08:14:11 GMT] DEBUG LOGGING STARTED ============================================
-[Wed, 28 Mar 2012 08:14:11 GMT] DEBUG ============================================================
+[Thu, 29 Mar 2012 05:28:40 GMT] INFO Creating 1 worker process.
+[Thu, 29 Mar 2012 05:28:40 GMT] INFO Server worker running in development on port 4000 with a PID of: 7668
+[Thu, 29 Mar 2012 05:28:40 GMT] DEBUG LOGGING STARTED ============================================
+[Thu, 29 Mar 2012 05:28:40 GMT] DEBUG ============================================================
+[Thu, 29 Mar 2012 05:28:47 GMT] INFO INTERN!
+[Thu, 29 Mar 2012 05:28:47 GMT] INFO match type is  object
+[Thu, 29 Mar 2012 05:28:47 GMT] INFO load in intern: game is null
+[Thu, 29 Mar 2012 05:28:47 GMT] INFO create game is: {"id":"hiFHB83vVK","type":"Game"}
+[Thu, 29 Mar 2012 05:29:35 GMT] INFO INTERN!
+[Thu, 29 Mar 2012 05:29:35 GMT] INFO match type is  object
+[Thu, 29 Mar 2012 05:29:35 GMT] INFO load in intern: game is null
+[Thu, 29 Mar 2012 05:29:35 GMT] INFO create game is: {"id":"8t2snwIX5c","type":"Game"}
+[Thu, 29 Mar 2012 05:30:25 GMT] INFO INTERN!
+[Thu, 29 Mar 2012 05:30:25 GMT] INFO match type is  object
+[Thu, 29 Mar 2012 05:30:25 GMT] INFO load in intern: game is null
+[Thu, 29 Mar 2012 05:30:25 GMT] INFO create game is: {"id":"YzjobfEZiM","type":"Game"}
+[Thu, 29 Mar 2012 05:30:35 GMT] INFO INTERN!
+[Thu, 29 Mar 2012 05:30:35 GMT] INFO match type is  object
+[Thu, 29 Mar 2012 05:30:35 GMT] INFO load in intern: game is {"id":"YzjobfEZiM","type":"Game"}

@@ -31,7 +31,8 @@ router.match('/').to({controller: 'Main', action: 'index'});
 //
 // Resource-based routes
 // router.resource('hemispheres');
-
+router.match('/games/intern'+'(.:format)', 'GET')
+  .to({controller: 'games', action: 'intern'});
 router.resource('games');
 router.resource('users');
 exports.router = router;
