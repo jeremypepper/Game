@@ -16,10 +16,9 @@ var Game = new (function () {
 	}
 	this.load = function(match,callback){
 		var validator;
-		geddy.log.info("match type is  "+typeof(match));;
 		if(typeof(match)==="string")
 		{
-			validator=function(game){geddy.log.info("game id " + game.id+"     match: "+match); return game.id==match; }
+			validator=function(game){return game.id==match; }
 		}
 		else if(typeof(match)==="object")
 		{
