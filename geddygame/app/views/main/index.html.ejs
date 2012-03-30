@@ -31,6 +31,7 @@ var otherName;
 var buffer =[];
 var $canvas = $("#thecanvas");
 var ctx = $canvas[0].getContext('2d');
+var isCanvasEnabled;
 
 function getUsers(){
 	// actually get games and users
@@ -75,12 +76,22 @@ $("#userarea form").submit(function(e){
 
 
 function startGame(game){
-	alert("this is the part where we start the game with" + game.drawFriend +"," + game.answerFriend);
 	$("#wordtitle").text(game.drawFriend + "->" + game.answerFriend);
-	$("#drawarea,#drawtools").show().data("game",game);
+	$("#drawarea").show().data("game",game);
+	if(game.drawData)
+	{
+		isCanvasEnabled = false;
+		drawIt(JSON.parse(game.drawData));
+	}
+	else
+	{
+		$("#drawtools").show();
+		isCanvasEnabled = true;
+	}
 }
 
-$("#friends a, #games a").live("click",function(){
+$("#friends a, #games a").live("click",function(e){
+	e.preventDefault();
 	var $this = $(this);
 	var game = $this.data("game");
 	if(game){
@@ -105,7 +116,10 @@ $("#friends a, #games a").live("click",function(){
 });
 
 window.onmousedown = function () {
-    isDown = 1;
+	if(isCanvasEnabled)
+	{
+    	isDown = 1;
+    }
 };
 window.onmouseup = function () {
     isDown = 0;
@@ -119,19 +133,51 @@ $canvas.mousemove(function (e) {
         if (!lastPoint)
             lastPoint = point;
         buffer.push({ c: "l", p1: lastPoint, p2: point });
-        ctx.beginPath();
-        ctx.moveTo(lastPoint[0], lastPoint[1]);
-        ctx.lineTo(point[0], point[1]);
-        ctx.stroke();
+        drawSection(lastPoint,point);
         lastPoint = point;
     }
 });
 
-$("#complete").click(function(){
+$("#complete").click(function(e){
+	e.preventDefault();
 	var game = $("#drawarea").data("game");
 	$.ajax("/games/update?id="+game.id, 
-		{ data: JSON.stringify(buffer),
+		{ data: {drawData: JSON.stringify(buffer)},
 		  type: "PUT"
 		});
 });
+
+function drawSection(point,lastPoint){
+	ctx.beginPath();
+    ctx.moveTo(lastPoint[0], lastPoint[1]);
+	ctx.lineTo(point[0], point[1]);
+    ctx.stroke();
+}
+function drawIt(drawData) {
+	var ctx = $canvas[0].getContext('2d'),
+		timeOffset = 0,
+		timeStep = 20;
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, 10000, 10000);
+
+	for (var i = 0; i < drawData.length; i++) {
+	    var chunk = drawData[i];
+	    if (chunk.c === "l") {
+	        (function (chunk) {
+	            window.setTimeout(function () {
+	                drawSection(chunk.p1,chunk.p2);
+	            }, timeOffset);
+	        })(chunk);
+
+	    }
+	    else if (chunk.c === "c") {
+	        (function (chunk) {
+	            window.setTimeout(function () {
+	                ctx.strokeStyle = chunk.cd;
+	            }, timeOffset);
+	        })(chunk);
+	    }
+	    timeOffset += timeStep;
+	};
+}
 </script>
