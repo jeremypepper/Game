@@ -31,6 +31,10 @@ var Main = function () {
       , friends: geddy.users
     });
   };
+  this.returnFromFacebook = function(req,resp,params){
+    this.respond(params,{format:'html',template:'app/views/main/return'});
+  };
+
 };
 
 exports.Main = Main;

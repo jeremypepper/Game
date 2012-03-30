@@ -20,6 +20,7 @@
 var router = new geddy.RegExpRouter();
 router.match('/').to({controller: 'Main', action: 'index'});
 router.match('/gamesAndFriends').to({controller: 'Main', action: 'gamesAndFriends'});
+router.match('/return').to({controller: 'Main', action: 'returnFromFacebook'});
 // Basic routes
 // router.match('/moving/pictures/:id').to(
 //    {controller: 'Moving', action: 'pictures'});
