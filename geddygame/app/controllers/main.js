@@ -74,11 +74,13 @@ var Main = function () {
         + "&redirect_uri=http%3A%2F%2Fzoopbloop.com%2Freturn"
         + "&client_secret=693ab1df0adcfe0975b9896e751279d7"
         + "&code="+code;
+
       var options = {
         host: "graph.facebook.com",
         port: 443,
         path: fbtokenpath
       };
+      
       geddy.log.info("doing a https call");
 
       // need to handle errors properly
