@@ -1,4 +1,5 @@
 var name;
+var userid;
 var otherName;
 var buffer =[];
 var $canvas = $("#thecanvas");
@@ -17,9 +18,11 @@ function fbGetFriends(cb){
 
 fbGetMe(function(user){
 	if(user.name){
+		name = user.name;
+		userid = user.id;
 		$("#navlogin").empty()
-			.append("<img src='http://graph.facebook.com/" + user.id + "/picture'/>")
-			.append("<span>"+user.name+"</span>");
+			.append("<img src='http://graph.facebook.com/" + userid + "/picture'/>")
+			.append("<span>"+ name+"</span>");
 		fbGetFriends(function(friends){
 			var $friendsDiv = $("#friends").empty();
 			for (var i = 0; i < friends.data.length; i++) {

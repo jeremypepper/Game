@@ -20,7 +20,7 @@ var config = {
   detailedErrors: true
 , debug: true
 , hostname: null
-, port: 81
+, port: 80
 , sessions: {
     store: 'memory'
   , key: 'sid'
