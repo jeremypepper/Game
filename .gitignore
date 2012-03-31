@@ -1,4 +1,5 @@
 */log/*.log
+log/*.log
 geddygame/mongodb/data/*
 *.orig
 node_modules
