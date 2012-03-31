@@ -1,0 +1,20 @@
+{
+  "name": "notp",
+  "version": "0.0.1",
+  "dependencies": {
+    "geddy": "0.3.20",
+    "mongodb": "0.9.9-7",
+    "jake": "0.2.31"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "0.6.12",
+    "npm":  "1.1.9"
+  },
+  "author": "",
+  "description": "eh",
+  "repository": {
+    "url": ""
+  }
+}
