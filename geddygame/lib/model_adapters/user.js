@@ -10,7 +10,7 @@ var User = new (function () {
 	        return callback(geddy.users[i]);
 	      }
 		}
-		return callback({});
+		return callback(null);
 	};
 })();
 exports.User = User;

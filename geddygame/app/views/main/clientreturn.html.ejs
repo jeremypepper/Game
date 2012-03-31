@@ -1,0 +1,42 @@
+
+<header id="username">welcome back</header>
+<script>
+function displayUser(user) {
+	var accessToken;
+	var expires;
+       var userName = document.getElementById('username');
+       var greetingText = document.createTextNode('Greetings, '
+         + user.name + '.');
+   		userName.appendChild(greetingText);
+      window.location = "/";
+    }
+
+    var accessparams = window.location.hash.substring(1).split("&");
+
+    var first = accessparams[0].split("=");
+    var second = accessparams[1].split("=");
+    if(first[0]=="access_token")
+    {
+		accessToken = first[1];
+	}
+	if(second[0]=="expires_in")
+	{
+		expires = parseInt(second[1],10);
+		//facebook gives seconds
+		var now = new Date();
+		expires = expires = new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes(),now.getSeconds()+expires,now.getMilliseconds())
+	}
+
+	$.cookie("fbtoken", accessToken, {expires: expires, path:"/"});
+	//alert(accessToken);
+	var path = "https://graph.facebook.com/me?";
+    var queryParams = ["access_token="+accessToken];
+    var query = queryParams.join('&');
+    var url = path + query;
+    $.getJSON(url+"&callback=?",displayUser)
+    // use jsonp to call the graph
+    //   var script = document.createElement('script');
+     //  script.src = url;
+      // document.body.appendChild(script);        
+     
+</script>

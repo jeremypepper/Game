@@ -2,6 +2,8 @@ var User = function () {
     this.defineProperties({
       id:    {type: 'string', required: true}
     , name:   {type: 'string', required: true}
+    , token:   {type: 'string', required: false}
+    , exipres:   {type: 'datetime', required: false}
     });
 
 };
