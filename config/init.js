@@ -13,6 +13,7 @@ geddy.model.adapter.Game = require(process.cwd() + '/lib/model_adapters/game').G
 geddy.model.adapter.User = require(process.cwd() + '/lib/model_adapters/user').User;
 geddy.db = require(process.cwd() + '/lib/database/mongodb').MongoDb;
 geddy.ajax = require(process.cwd() + '/lib/utils/ajax').Ajax;
+geddy.facebook = require(process.cwd() + '/lib/utils/facebook').Facebook;
 var stringutils = require(process.cwd() + '/lib/utils/ajax').String;
 for (var p in stringutils) {
   geddy.string[p] = stringutils[p];

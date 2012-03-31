@@ -18,7 +18,7 @@
 
 var Main = function () {
   var QueryString = require("querystring"),
-      https = require("https");
+      facebook = geddy.facebook;
       ajax = geddy.ajax;
   var fbgraph = "https://graph.facebook.com";
   var fbStateLookup = "fbstate";
@@ -47,42 +47,44 @@ var Main = function () {
     this.redirect("https://www.facebook.com/dialog/oauth?client_id=405186406159531&redirect_uri=http%3A%2F%2Fzoopbloop.com%2Freturn&state="+fbstate);
   }
 
-  function getMe(token,expires,cb)
+  function loginOrRegisterUser(token,expires,cb)
   {
     // todo check for errors
-    ajax.get(fbgraph +"/me?access_token=" + token ,function(res,data){
-      if(res.statusCode==200)
-      {
-        var me = JSON.parse(data);
-        geddy.log.info(me.id);
-        geddy.log.info(me.name);
-        geddy.model.User.load(me.id,function(user){
-          if(!user)
-          {
-            //dont have this user yet, need to create a new one
-            // todo: replace expires with now + expires
-            user = geddy.model.User.create({ 
-              id: me.id,
-              name: me.name,
-              token: token,
-              expires: new Date()});
-            geddy.model.User.create(me.id,function(user){});
-          }
-          else
-          {
-            user.token = token;
-            user.expires = new Date();
-          }
+    console.log("facebook is" + facebook.getMe)
+    facebook.getMe(
+      token ,
+      function(data){
+        if(data.error)
+        {
+          cb(data);
+        }
+        else
+        {
+          var me = data;
+          geddy.model.User.load(me.id,function(user){
+            if(!user)
+            {
+              // dont have this user yet, need to create a new one
+              // todo: replace expires with now + expires
+              user = geddy.model.User.create({ 
+                id: me.id,
+                name: me.name,
+                token: token,
+                expires: new Date()});
+              geddy.model.User.create(me.id,function(user){});
+            }
+            else
+            {
+              user.token = token;
+              user.expires = new Date();
+            }
 
-          user.save();
-          cb(user);
-        });
+            user.save();
+            cb(user);
+          });
+        }
       }
-      else
-      {
-        cb(null);
-      }
-    });
+    );
   }
 
   this.returnFromFacebook = function(req,resp,params){
@@ -130,7 +132,7 @@ var Main = function () {
             geddy.log.info("Yay we got a token");
             var qs = QueryString.parse(data);
             var token = qs.access_token;
-            getMe(token,qs.expires,done);
+            loginOrRegisterUser(token,qs.expires,done);
           }
           else
           {
