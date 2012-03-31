@@ -1,0 +1,39 @@
+[Fri, 30 Mar 2012 03:28:21 GMT] INFO Server starting with config: {
+  "environment": "development",
+  "workers": 1,
+  "port": 4000,
+  "debug": true,
+  "rotateWorkers": false,
+  "rotationWindow": 7200000,
+  "rotationTimeout": 300000,
+  "logDir": "/Users/luke/Game/geddygame/log",
+  "gracefulShutdownTimeout": 30000,
+  "heartbeatInterval": 5000,
+  "heartbeatWindow": 20000,
+  "staticFilePath": "/Users/luke/Game/geddygame/public",
+  "sessions": {
+    "store": "memory",
+    "key": "sid",
+    "expiry": 1209600
+  },
+  "cookieSessionKey": "sdata",
+  "metrics": null,
+  "i18n": {
+    "defaultLocale": "en-us",
+    "loadPaths": [
+      "/Users/luke/Game/geddygame/config/locales"
+    ]
+  },
+  "ssl": null,
+  "model": {
+    "useTimestamps": false,
+    "forceCamel": true
+  },
+  "detailedErrors": true,
+  "hostname": null
+}
+[Fri, 30 Mar 2012 03:28:21 GMT] INFO Creating 1 worker process.
+[Fri, 30 Mar 2012 03:28:21 GMT] DEBUG Ensuring db connection.
+[Fri, 30 Mar 2012 03:28:21 GMT] INFO Server worker running in development on port 4000 with a PID of: 9363
+[Fri, 30 Mar 2012 03:28:21 GMT] DEBUG LOGGING STARTED ============================================
+[Fri, 30 Mar 2012 03:28:21 GMT] DEBUG ============================================================
