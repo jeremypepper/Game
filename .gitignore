@@ -1,7 +1,5 @@
 */log/*.log
 log/*.log
-geddygame/mongodb/data/*
+mongodb/data/*
 *.orig
 node_modules
-
-/mongodb/data/mongod.lock
