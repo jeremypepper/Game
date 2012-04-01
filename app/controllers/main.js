@@ -26,16 +26,33 @@ var Main = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-    var gotUserCallback = function(user){
+    var gotGamesAndUserCallback = function(user,games)
+    {
       self.respond(
         {
           user:user
-        }
-        , {
+        },
+        {
             format: 'html'
-            , template: 'app/views/main/index'
-          }
+          , template: 'app/views/main/index'
+        }
       );
+    };
+
+    var gotUserCallback = function(user){
+      if(user){
+        geddy.model.Game.load(
+          function(game){
+            return game.drawFriend == user.id || game.answerFriend == user.id;
+          },
+          function(games){
+            gotGamesAndUserCallback(user,games)
+          }
+        );
+      }
+      else{
+        gotGamesAndUserCallback(user);
+      }
     };
     geddy.commonController.verifyGetUser(this,gotUserCallback)
   };
