@@ -79,7 +79,6 @@ var Main = function () {
   function loginOrRegisterUser(token,expires,cb)
   {
     // todo check for errors
-    console.log("facebook is" + facebook.getMe)
     facebook.getMe(
       token ,
       function(data){
@@ -136,7 +135,6 @@ var Main = function () {
       geddy.log.error("oh snap, got an error in returnFromFacebook");
       done(null);
     }
-    geddy.log.info("query: " + query);
 
     if(query.state && fbstate === query.state)
     {
@@ -147,21 +145,10 @@ var Main = function () {
 
     if(stateIsValid && code)
     {
-      geddy.log.info("calling facebook for token");
-      var fbtokenpath = "/oauth/access_token?"
-        + "client_id="+405186406159531
-        + "&redirect_uri=http%3A%2F%2Fzoopbloop.com%2Freturn"
-        + "&client_secret=693ab1df0adcfe0975b9896e751279d7"
-        + "&code="+code;
-      // need to handle errors properly
-      ajax.get(
-        fbgraph+fbtokenpath,
-        function(res,data){
-          var success = res.statusCode==200;
-          
-          if(success && data)
+      function gotTokenCallback(data)
+      {
+         if(data)
           {
-            geddy.log.info("Yay we got a token");
             var qs = QueryString.parse(data);
             var token = qs.access_token;
             var now = new Date();
@@ -173,9 +160,9 @@ var Main = function () {
           {
             errorhandler()
           }
-        },
-        errorhandler
-      );
+      }
+
+      facebook.getServerAccessTokenUrl("/return", code, gotTokenCallback);
     }
     else
     {

@@ -27,6 +27,8 @@ var config = {
   }
   //custom stuff
 , fbhost: "notp.herokuapp.com"
+, fbapp : 267743886645939
+, fbsecret : "abb552902d5a563d7414bc1dd0badb1a"
 };
 
 module.exports = config;

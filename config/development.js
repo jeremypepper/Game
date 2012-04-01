@@ -29,6 +29,8 @@ var config = {
 
   //custom stuff
 , fbhost : "zoopbloop.com"
+, fbapp : 405186406159531
+, fbsecret : "693ab1df0adcfe0975b9896e751279d7"
 };
 
 module.exports = config;
