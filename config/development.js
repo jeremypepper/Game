@@ -26,6 +26,9 @@ var config = {
   , key: 'sid'
   , expiry: 14 * 24 * 60 * 60
   }
+
+  //custom stuff
+, fbhost : "zoopbloop.com"
 };
 
 module.exports = config;

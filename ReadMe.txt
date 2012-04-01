@@ -11,4 +11,8 @@ Add the following to your hosts file, C:\Windows\System32\drivers\etc\hosts, for
 127.0.0.1 zoopbloop.com
 127.0.0.1 www.zoopbloop.com
 
-goto http://zoopbloop.com:81
+
+Run:
+(development) geddy
+(production) geddy -e production
+goto http://zoopbloop.com

@@ -41,8 +41,15 @@
               <li><a href="/games">Games</a></li>
             </ul>
             <ul class="nav pull-right">
-              <li><a id="navlogin" href="https://www.facebook.com/dialog/oauth?client_id=405186406159531&redirect_uri=http%3A%2F%2Fzoopbloop.com%2Freturn&response_type=token">Login With Facebook</a></li>
-              <li><a id="navlogin" href="/connectToFacebook">Login With Facebook</a></li>
+              <li>
+                <% if(typeof user !== "undefined" && user && user.id && user.name){ %>
+                  <a id="navlogin" href="/connectToFacebook"><img src="http://graph.facebook.com/<%=user.id%>/picture" />
+                    <span><%=user.name%></span>
+                  </a>
+                <%}else{ %>
+                  <a id="navlogin" href="/connectToFacebook">Login With Facebook</a>
+                <% } %>
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

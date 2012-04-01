@@ -17,16 +17,27 @@
 */
 
 var Main = function () {
-  var QueryString = require("querystring"),
-      facebook = geddy.facebook;
-      ajax = geddy.ajax;
-  var fbgraph = "https://graph.facebook.com";
-  var fbStateLookup = "fbstate";
+  var QueryString = require("querystring")
+      , facebook = geddy.facebook
+      , ajax = geddy.ajax
+      , url = require("url")
+      , fbgraph = "https://graph.facebook.com"
+      , fbStateLookup = "fbstate";
+
   this.index = function (req, resp, params) {
-    this.respond(params, {
-      format: 'html'
-    , template: 'app/views/main/index'
-    });
+    var self = this;
+    var gotUserCallback = function(user){
+      self.respond(
+        {
+          user:user
+        }
+        , {
+            format: 'html'
+            , template: 'app/views/main/index'
+          }
+      );
+    };
+    geddy.commonController.verifyGetUser(this,gotUserCallback)
   };
 
   this.gamesAndFriends = function (req, resp, params) {
@@ -43,8 +54,9 @@ var Main = function () {
       fbstate = geddy.string.uuid(128);
       this.session.set(fbStateLookup,fbstate);
     }
-
-    this.redirect("https://www.facebook.com/dialog/oauth?client_id=405186406159531&redirect_uri=http%3A%2F%2Fzoopbloop.com%2Freturn&state="+fbstate);
+    var returnUrl = encodeURIComponent("http://" + geddy.config.fbhost + "/return");
+    var redirecturl = facebook.getServerAuthUrl(405186406159531,returnUrl,fbstate);
+    this.redirect(redirecturl);
   }
 
   function loginOrRegisterUser(token,expires,cb)
@@ -61,7 +73,7 @@ var Main = function () {
         else
         {
           var me = data;
-          geddy.model.User.load(me.id,function(user){
+          geddy.model.User.load(me.id,token,function(user){
             if(!user)
             {
               // dont have this user yet, need to create a new one
@@ -88,8 +100,7 @@ var Main = function () {
   }
 
   this.returnFromFacebook = function(req,resp,params){
-    //todo: make this query parsing into a util function
-    geddy.log.info("in return from facebook. url:" + req.url)
+    //todo: clean this crap up
     var url = require("url");
     var self = this;
     var query = url.parse(req.url,true).query;
@@ -97,7 +108,11 @@ var Main = function () {
     var code;
     var fbstate = this.session.get(fbStateLookup);
     var done = function(data){
-      self.respond(data?data:params,{format:'html',template:'app/views/main/return'});
+      if(data&&data.id)
+      {
+        self.cookies.set("fbid",data.id, {path:"/"});
+        self.redirect('/');
+      }
     }
     var errorhandler = function()
     {
@@ -132,6 +147,9 @@ var Main = function () {
             geddy.log.info("Yay we got a token");
             var qs = QueryString.parse(data);
             var token = qs.access_token;
+            var now = new Date();
+            var expires = new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes(),now.getSeconds()+ parseInt(qs.expires,10),now.getMilliseconds());
+            self.cookies.set("fbauth",token, {expires:expires,path:"/"});
             loginOrRegisterUser(token,qs.expires,done);
           }
           else

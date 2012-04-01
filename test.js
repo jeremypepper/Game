@@ -14,6 +14,15 @@ ajax.get("http://www.msn.com",
 );
 
 
-var string = require("./lib/utils/string.js").String;
-assert("foo bar baz", string.format("{0} bar {1}","foo","baz"));
+var string = require("./lib/utils/string.js").StringUtils;
+console.log(string.format("{0} bar {1}","foo","baz"));
+assert("foo bar baz" === string.format("{0} bar {1}","foo","baz"));
 
+console.log(
+	string.format("https://www.facebook.com/dialog/oauth?client_id={0}&redirect_uri={1}&state={2}"
+			, "clientid"
+			, "redirecturi"
+			, "fbstate"
+		));
+
+console.log(encodeURIComponent("http://msn.com/asdfoea?asdfasf=&asdfasdf"))

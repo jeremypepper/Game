@@ -14,7 +14,10 @@ geddy.model.adapter.User = require(process.cwd() + '/lib/model_adapters/user').U
 geddy.db = require(process.cwd() + '/lib/database/mongodb').MongoDb;
 geddy.ajax = require(process.cwd() + '/lib/utils/ajax').Ajax;
 geddy.facebook = require(process.cwd() + '/lib/utils/facebook').Facebook;
-var stringutils = require(process.cwd() + '/lib/utils/ajax').String;
+var stringutils = require(process.cwd() + '/lib/utils/string').String;
 for (var p in stringutils) {
   geddy.string[p] = stringutils[p];
 }
+
+geddy.commonController = require(process.cwd() + '/lib/commonController').CommonController;
+
