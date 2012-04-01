@@ -88,19 +88,15 @@ function startGame(game){
 }
 
 $("#friends a, #games a").live("click",function(e){
+	e.preventDefault(e);
 	var $this = $(this);
 	var game = $this.data("game");
 	if(game){
 		startGame(game);
 	}
 	else{
-		otherName = $this.text();
-		postMessage ={
-		  		drawFriend: name
-		  		, answerFriend: otherName
-			};
-		$.get("/games/intern.json",
-			postMessage,
+		var gameid = $this.data("gameid");
+		$.get("/games/"+gameid + ".json",
 			function(data){
 				if(data && data.game)
 					startGame(data.game);
@@ -181,19 +177,21 @@ $(document).ready(function(){
 	var friendNames = [];
 	var friendLookup = [];
 	var $friendTypeahead = $("#friendTypeahead");
-	fbGetFriends(function(friends){
-		if(friends && !friends.error){
-			var $friendsDiv = $("#friends").empty();
-			for (var i = 0; i < friends.data.length; i++) {
-				var friend = friends.data[i];
-				friendLookup[friend.name] = friend;
-				// bug: duplicate friend names cant be resolved
-				friendNames.push(friend.name);
-			}
+	function setupTypeahead(){
+		fbGetFriends(function(friends){
+			if(friends && !friends.error){
+				var $friendsDiv = $("#friends").empty();
+				for (var i = 0; i < friends.data.length; i++) {
+					var friend = friends.data[i];
+					friendLookup[friend.name] = friend;
+					// bug: duplicate friend names cant be resolved
+					friendNames.push(friend.name);
+				}
 
-			$friendTypeahead.typeahead({"source": friendNames});
-		}
-	});
+				$friendTypeahead.typeahead({"source": friendNames});
+			}
+		});
+	}
 	$("#friendTypeaheadOK").click(function(){
 		var friend = friendLookup[$friendTypeahead.val()];
 		alert("start a new game with "+ friend.name + " " + friend.id  );
@@ -201,6 +199,7 @@ $(document).ready(function(){
 	});
 	$("#startgamebtn").click(function(e){
 		e.preventDefault();
+		setupTypeahead();
 		$("#friendTypeaheadForm").show();
 	});
 });

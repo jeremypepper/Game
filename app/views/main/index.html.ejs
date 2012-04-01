@@ -17,7 +17,16 @@
 </div>
 <div class="hero-unit">
 	<h3>Games<h3>
-	<ul id="games"></ul>
+	<ul id="games">
+    <% if(games){
+      for(var i=0; i < games.length; i++){ 
+      var g = games[i];  
+    %>
+      <li><a href="#" data-gameid="<%= g.id %>"><%=g.drawFriend + "->" + g.answerFriend %></a></li>
+    <% }
+    }
+     %>
+  </ul>
 	<h3>Friends<h3>
 	<ul id="friends"></ul>
 </div>

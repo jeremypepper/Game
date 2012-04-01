@@ -12,10 +12,11 @@ var Main = function () {
 		{
 			self.respond(
 				{
-					user:user
+					user:user,
+					games:games
 				},
 				{
-						format: 'html'
+					format: 'html'
 					, template: 'app/views/main/index'
 				}
 			);
@@ -23,14 +24,20 @@ var Main = function () {
 
 		var gotUserCallback = function(user){
 			if(user){
-				geddy.model.Game.load(
-					function(game){
-						return game.drawFriend == user.id || game.answerFriend == user.id;
-					},
-					function(games){
-						gotGamesAndUserCallback(user,games)
-					}
-				);
+				// todo: figure out why this doesn't work
+				// geddy.model.adapter.Game.load(
+				// 	function(game){
+				// 		return game.drawFriend == user.id || game.answerFriend == user.id;
+				// 	},
+				// 	function(games){
+				// 		geddy.log.info("games returned from load"+ games)
+				// 		gotGamesAndUserCallback(user,games)
+				// 	},
+				// 	true
+				// );
+
+				// for now, show all games
+				gotGamesAndUserCallback(user,geddy.games)
 			}
 			else{
 				gotGamesAndUserCallback(user);
