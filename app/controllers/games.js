@@ -1,4 +1,3 @@
-
 var Games = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
@@ -7,34 +6,61 @@ var Games = function () {
   };
 
   this.add = function (req, resp, params) {
-    this.respond({params: params});
+    var self = this;
+    geddy.log.info("in add" );
+    function gotUserCallback(user){
+      self.respond({user: user,params:params});
+    }
+    
+    geddy.commonController.verifyGetUser(this,gotUserCallback)
   };
 
   this.create = function (req, resp, params) {
-      // Save the resource, then display index page
-      game = geddy.model.Game.create(
-      { 
-        id: geddy.string.uuid(10),
-        drawFriend: params.drawFriend,
-        answerFriend:params.answerFriend,
-        drawData: null,
-        state: 0
-      });
-
-      if (game.isValid()) {
-        game.save();
-      } else {
+    // todo error handling on user input
+    var self = this;
+    geddy.log.info("in creategame " );
+    function gotUserCallback(user)
+    {
+      if(!user){
+        geddy.log.error("error authenticating user")
         self.redirect({controller: self.name, action: 'add?error=true'});
       }
-    //self.redirect({controller: self.name, id: game.id});
-    self.redirect("/games/"+game.id);
+
+      // Save the resource, then display index page
+      var game = geddy.model.Game.create(
+      {
+        id: geddy.string.uuid(10),
+        drawFriend: user.id,
+        //todo: verify that this is an actual friend of the user
+        answerFriend:params.answerFriend,
+        state: 0
+      });
+      geddy.log.info("trying to save game "+ game)
+      geddy.log.info("is game valid " + game.isValid());
+      if (game.isValid()) {
+        geddy.log.info("saved game "+game.id)
+        game.save();
+      } else {
+        geddy.log.error("error creating game")
+        geddy.log.error(game.isValid())
+        self.redirect({controller: self.name, action: 'add?error=true'});
+      }
+
+      //todo figure out why this isn't working
+      //self.redirect({controller: self.name, id: game.id});
+      self.redirect("/games/"+game.id+".json");
+      
+    }
+
+    geddy.commonController.verifyGetUser(this,gotUserCallback)
   };
 
   this.show = function (req, resp, params) {
     var self = this;
+    geddy.log.info("getting game "+params.id)
     geddy.model.Game.load(params.id,function(game){
-      geddy.log.info("load in show: game is " + game);
-      self.respond({params:game});
+      geddy.log.info("got game "+game)
+      self.respond({game:game});
     });
   };
 

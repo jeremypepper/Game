@@ -5,7 +5,7 @@ var buffer =[];
 var $canvas = $("#thecanvas");
 var ctx = $canvas[0].getContext('2d');
 var isCanvasEnabled;
-var access_token = $.cookie("fbtoken");
+var access_token = $.cookie("fbauth");
 
 function fbGetMe(cb){
 	var url = "https://graph.facebook.com/me?access_token="+access_token;
@@ -16,26 +16,26 @@ function fbGetFriends(cb){
 	$.getJSON(url+"&callback=?",cb)
 }
 
-fbGetMe(function(user){
-	if(user.name){
-		name = user.name;
-		userid = user.id;
-		$("#navlogin").empty()
-			.append("<img src='http://graph.facebook.com/" + userid + "/picture'/>")
-			.append("<span>"+ name+"</span>");
-		fbGetFriends(function(friends){
-			var $friendsDiv = $("#friends").empty();
-			for (var i = 0; i < friends.data.length; i++) {
-				var friend = friends.data[i];
-				$friendsDiv.append($("<li>")
-					.append($("<a href='#drawarea'>")
-						.append("<img src='http://graph.facebook.com/" + friend.id + "/picture'/>")
-						.append("<span>"+ friend.name+"</span>"))
-				);
-			}
-		});
-	}
-});
+// fbGetMe(function(user){
+// 	if(user.name){
+// 		name = user.name;
+// 		userid = user.id;
+// 		$("#navlogin").empty()
+// 			.append("<img src='http://graph.facebook.com/" + userid + "/picture'/>")
+// 			.append("<span>"+ name+"</span>");
+// 		fbGetFriends(function(friends){
+// 			var $friendsDiv = $("#friends").empty();
+// 			for (var i = 0; i < friends.data.length; i++) {
+// 				var friend = friends.data[i];
+// 				$friendsDiv.append($("<li>")
+// 					.append($("<a href='#drawarea'>")
+// 						.append("<img src='http://graph.facebook.com/" + friend.id + "/picture'/>")
+// 						.append("<span>"+ friend.name+"</span>"))
+// 				);
+// 			}
+// 		});
+// 	}
+// });
 function getUsers(){
 	// actually get games and users
 	$.getJSON("/gamesAndFriends",function(data){
@@ -57,26 +57,20 @@ function getUsers(){
 	});
 }
 
-$("#userarea form").submit(function(e){
-	e.preventDefault();
-	name = $(this).find("input[type='text']").val();
-	$("#navlogin").text(name);
-	$(this).parent().hide();
-	var formdata = {"name":name};
-	$.getJSON("/users/" + name + ".json",function(data){
-		if(data && data.user && data.user.id)
-		{
-			getUsers();
-		}
-		else
-		{
-			$.post("/users", formdata,function(data){
-				getUsers();
-			});
-		}
-	});
-});
-
+function createGame(answerFriend){
+	var postMessage ={
+		  		answerFriend: answerFriend
+			};
+		$.post("/games.json",
+			postMessage,
+			function(data){
+				if(data && data.game)
+					startGame(data.game);
+				else
+					alert("error");
+			}
+		)
+}
 
 function startGame(game){
 	$("#wordtitle").text(game.drawFriend + "->" + game.answerFriend);
@@ -182,3 +176,31 @@ function drawIt(drawData) {
 	    timeOffset += timeStep;
 	};
 }
+
+$(document).ready(function(){
+	var friendNames = [];
+	var friendLookup = [];
+	var $friendTypeahead = $("#friendTypeahead");
+	fbGetFriends(function(friends){
+		if(friends && !friends.error){
+			var $friendsDiv = $("#friends").empty();
+			for (var i = 0; i < friends.data.length; i++) {
+				var friend = friends.data[i];
+				friendLookup[friend.name] = friend;
+				// bug: duplicate friend names cant be resolved
+				friendNames.push(friend.name);
+			}
+
+			$friendTypeahead.typeahead({"source": friendNames});
+		}
+	});
+	$("#friendTypeaheadOK").click(function(){
+		var friend = friendLookup[$friendTypeahead.val()];
+		alert("start a new game with "+ friend.name + " " + friend.id  );
+		createGame(friend.id);
+	});
+	$("#startgamebtn").click(function(e){
+		e.preventDefault();
+		$("#friendTypeaheadForm").show();
+	});
+});

@@ -1,15 +1,19 @@
 <!-- Lets talk about geddy -->
 <div class="hero-unit geddy-welcome-box">
   <h1>&#175;\\_(ツ)_/&#175;</h1>
-  <p>Yup, there should be a game here... someday </p>
+  
+  <% if(typeof user !== "undefined" && user && user.id && user.name){ %>
+    <p>Awesome, you logged in.  Time to start some games.</p>
+    <a class="btn btn-primary btn-large" id="startgamebtn" href="/games/add">Start a new Game</a>
+  <% }else{ %>
+    <p>Welcome, you should totally log in, it will be fun.</p>
+    <a class="btn btn-primary btn-large" id="loginbtn" href="/connectToFacebook">Login with Facebook</a>
+  <% } %>
 </div>
-
-<div class="hero-unit" id="userarea">
-  <form action="/users" method="POST">
-  	<h2>Name</h2>
-    <input type="text" class="span6" name="name"/>
-    <input type="submit" class="btn btn-primary"/>
-  </form>
+<div class="hero-unit none" id="friendTypeaheadForm">
+  <span>Select a friend: </span>
+  <input type="text" class="span3" id="friendTypeahead" data-items="4" >
+  <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
 </div>
 <div class="hero-unit">
 	<h3>Games<h3>
