@@ -1,1 +1,1 @@
-web: node node_modules/geddy/bin/cli.js -p $PORT
+web: node node_modules/geddy/bin/cli.js -p $PORT -e production
