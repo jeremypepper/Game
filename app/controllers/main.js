@@ -60,7 +60,7 @@ var Main = function () {
 			this.session.set(fbStateLookup,fbstate);
 		}
 		var returnUrl = encodeURIComponent("http://" + geddy.config.fbhost + "/return");
-		var redirecturl = facebook.getServerAuthUrl(405186406159531,returnUrl,fbstate);
+		var redirecturl = facebook.getServerAuthUrl(geddy.config.fbapp,returnUrl,fbstate);
 		this.redirect(redirecturl);
 	}
 

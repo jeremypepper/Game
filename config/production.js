@@ -19,7 +19,7 @@
 var config = {
   detailedErrors: false
 , hostname: null
-, port: 4000
+, port: 80
 , sessions: {
     store: 'memory'
   , key: 'sid'
