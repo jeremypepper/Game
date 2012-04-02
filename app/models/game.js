@@ -2,7 +2,9 @@ var Game = function () {
   this.defineProperties({
     id:    {type: 'string', required: true}
   , drawFriend:   {type: 'string', required: true}
+  , drawName:   {type: 'string', required: true}
   , answerFriend:   {type: 'string', required: true}
+  , answerName:   {type: 'string', required: true}
   , state:   {type: 'number', required: true}
   , drawData: {type: 'string', required: false}
   });
@@ -12,7 +14,8 @@ var Game = function () {
   this.validatesLength('drawFriend', {min: 2});
   this.validatesPresent('answerFriend');
   this.validatesLength('answerFriend', {min: 2});
-
+  this.validatesPresent('drawName');
+  this.validatesPresent('answerName');
   this.validatesWithFunction('state', function (status) {
   	return status === 0 || status === 1 || status === 2;
   });

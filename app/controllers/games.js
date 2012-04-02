@@ -31,11 +31,13 @@ var Games = function () {
       {
         id: geddy.string.uuid(10),
         drawFriend: user.id,
+        drawName: user.name,
         //todo: verify that this is an actual friend of the user
         answerFriend:params.answerFriend,
+        answerName:params.answerName,
         state: 0
       });
-      geddy.log.info("trying to save game "+ game)
+
       geddy.log.info("is game valid " + game.isValid());
       if (game.isValid()) {
         geddy.log.info("saved game "+game.id)

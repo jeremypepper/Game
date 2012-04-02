@@ -8,41 +8,40 @@ var Main = function () {
 
 	this.index = function (req, resp, params) {
 		var self = this;
-		var gotGamesAndUserCallback = function(user,games)
-		{
+		var result = {};
+
+		var gotUserCallback = function(user){
+			result.user = user;
+			if(user){
+				geddy.model.adapter.Game.load(
+					function(game){
+						return game.drawFriend == user.id || game.answerFriend == user.id;
+					},
+					function(games){
+						// for now, show all games
+						// bug here
+						result.games = geddy.games;
+						done();
+					},
+					true
+				);
+			}
+			else{
+				result.games = {};
+				done();
+			}
+		};
+
+		function done(){
 			self.respond(
-				{
-					user:user,
-					games:games
-				},
+				result,
 				{
 					format: 'html'
 					, template: 'app/views/main/index'
 				}
 			);
-		};
+		}
 
-		var gotUserCallback = function(user){
-			if(user){
-				// todo: figure out why this doesn't work
-				// geddy.model.adapter.Game.load(
-				// 	function(game){
-				// 		return game.drawFriend == user.id || game.answerFriend == user.id;
-				// 	},
-				// 	function(games){
-				// 		geddy.log.info("games returned from load"+ games)
-				// 		gotGamesAndUserCallback(user,games)
-				// 	},
-				// 	true
-				// );
-
-				// for now, show all games
-				gotGamesAndUserCallback(user,geddy.games)
-			}
-			else{
-				gotGamesAndUserCallback(user);
-			}
-		};
 		geddy.commonController.verifyGetUser(this,gotUserCallback)
 	};
 

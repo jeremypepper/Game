@@ -1,15 +1,10 @@
-<!-- Lets talk about geddy -->
-<div class="hero-unit geddy-welcome-box">
-  <h1>&#175;\\_(ツ)_/&#175;</h1>
-  
-  <% if(typeof user !== "undefined" && user && user.id && user.name){ %>
-    <p>Awesome, you logged in.  Time to start some games.</p>
-    <a class="btn btn-primary btn-large" id="startgamebtn" href="/games/add">Start a new Game</a>
-  <% }else{ %>
+<% if(typeof user === "undefined" || !user || !user.id || !user.name){ %>
+  <div class="hero-unit geddy-welcome-box">
+    <h1>&#175;\\_(ツ)_/&#175;</h1>
     <p>Welcome, you should totally log in, it will be fun.</p>
     <a class="btn btn-primary btn-large" id="loginbtn" href="/connectToFacebook">Login with Facebook</a>
-  <% } %>
-</div>
+  </div>
+<% } %>
 <div class="hero-unit none" id="friendTypeaheadForm">
   <span>Select a friend: </span>
   <input type="text" class="span3" id="friendTypeahead" data-items="4" >
@@ -22,13 +17,14 @@
       for(var i=0; i < games.length; i++){ 
       var g = games[i];  
     %>
-      <li><a href="#" data-gameid="<%= g.id %>"><%=g.drawFriend + "->" + g.answerFriend %></a></li>
+      <li><a href="#" data-gameid="<%= g.id %>"><%=g.drawName + "->" + g.answerName %></a></li>
     <% }
     }
      %>
   </ul>
-	<h3>Friends<h3>
-	<ul id="friends"></ul>
+	<% if(typeof user !== "undefined" && user && user.id && user.name){ %>
+    <a class="btn btn-primary btn-large" id="startgamebtn" href="/games/add">Start a new Game</a>
+  <% } %>
 </div>
 <div id="drawarea" class="hero-unit none">
     <h2 id="wordtitle"></h2>

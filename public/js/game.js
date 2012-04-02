@@ -57,9 +57,10 @@ function getUsers(){
 	});
 }
 
-function createGame(answerFriend){
+function createGame(answerFriend,answerName){
 	var postMessage ={
-		  		answerFriend: answerFriend
+		  		answerFriend: answerFriend,
+		  		answerName: answerName
 			};
 		$.post("/games.json",
 			postMessage,
@@ -73,7 +74,7 @@ function createGame(answerFriend){
 }
 
 function startGame(game){
-	$("#wordtitle").text(game.drawFriend + "->" + game.answerFriend);
+	$("#wordtitle").text(game.drawName + "->" + game.answerName);
 	$("#drawarea").show().data("game",game);
 	if(game.drawData)
 	{
@@ -194,8 +195,7 @@ $(document).ready(function(){
 	}
 	$("#friendTypeaheadOK").click(function(){
 		var friend = friendLookup[$friendTypeahead.val()];
-		alert("start a new game with "+ friend.name + " " + friend.id  );
-		createGame(friend.id);
+		createGame(friend.id, friend.name);
 	});
 	$("#startgamebtn").click(function(e){
 		e.preventDefault();
