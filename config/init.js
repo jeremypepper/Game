@@ -1,4 +1,3 @@
-
 // Add uncaught-exception handler in prod-like environments
 if (geddy.config.environment != 'development') {
   process.addListener('uncaughtException', function (err) {
@@ -21,3 +20,5 @@ for (var p in stringutils) {
 
 geddy.commonController = require(process.cwd() + '/lib/commonController').CommonController;
 
+var words = require(process.cwd() + '/config/words').Words;
+geddy.wordlist = require(process.cwd() + '/lib/utils/wordlist').WordList(words);
