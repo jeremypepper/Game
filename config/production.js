@@ -19,6 +19,7 @@
 var config = {
   detailedErrors: false
 , hostname: null
+, workers: 1
 , port: 80
 , sessions: {
     store: 'memory'
