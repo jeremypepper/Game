@@ -117,6 +117,7 @@ var Main = function () {
 				self.cookies.set("fbid",data.id, {path:"/"});
 				self.redirect('/');
 			}else{
+				geddy.log.error(data.error);
 				self.respond(data,{format:'html',template:'app/views/main/return'});
 			}
 		}
@@ -157,7 +158,10 @@ var Main = function () {
 		}
 		else
 		{
-			self.respond({error:"error: state is invalid or can't get code from callback"},{format:'html',template:'app/views/main/return'});
+			var errmsg = "error: state is invalid or can't get code from callback";
+			geddy.log.error(errormsg);
+			geddy.log.error(query);
+			done({error:errormsg});
 		}
 	};
 };
