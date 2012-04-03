@@ -8,4 +8,7 @@ geddygame/MongoDB/x64/bin/mongoimport.exe
 geddygame/MongoDB/x64/bin/mongorestore.exe
 geddygame/MongoDB/x64/bin/mongostat.exe
 geddygame/MongoDB/x64/bin/mongotop.exe
+log/*.log
+mongodb/data/*
 *.orig
+node_modules

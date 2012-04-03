@@ -1,0 +1,9 @@
+<div class="hero-unit">
+    <ul>
+  <% for (var p in game) {
+  		if(typeof(game[p])!=="function" ){
+   %>
+    <li><%= p + ': ' + game[p]; %></li>
+  <% }} %>
+  </ul>
+</div>
