@@ -116,12 +116,15 @@ var Main = function () {
 			{
 				self.cookies.set("fbid",data.id, {path:"/"});
 				self.redirect('/');
+			}else{
+				self.respond(data,{format:'html',template:'app/views/main/return'});
 			}
 		}
 		var errorhandler = function()
 		{
-			geddy.log.error("oh snap, got an error in returnFromFacebook");
-			done(null);
+			var errormsg = "oh snap, got an error in returnFromFacebook";
+			geddy.log.error(errormsg);
+			done({error:"oh snap, got an error in returnFromFacebook"});
 		}
 
 		if(query.state && fbstate === query.state)
@@ -154,7 +157,7 @@ var Main = function () {
 		}
 		else
 		{
-			self.respond({},{format:'html',template:'app/views/main/return'});
+			self.respond({error:"error: state is invalid or can't get code from callback"},{format:'html',template:'app/views/main/return'});
 		}
 	};
 };
