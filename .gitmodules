@@ -1,0 +1,3 @@
+[submodule "node_modules/geddy"]
+	path = node_modules/geddy
+	url = git@github.com:lakemalcom/geddy.git
