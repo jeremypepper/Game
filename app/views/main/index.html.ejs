@@ -6,25 +6,21 @@
   </div>
 <% } %>
 <div class="hero-unit none" id="friendTypeaheadForm">
-  <span>Select a friend: </span>
-  <input type="text" class="span3" id="friendTypeahead" data-items="4" >
-  <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
+ 
 </div>
-<div class="hero-unit">
-	<h3>Games<h3>
-	<ul id="games">
+<div class="hero-unit" id="games">
+	<h2>Games</h2>
     <% if(games){
       for(var i=0; i < games.length; i++){ 
       var g = games[i];  
     %>
-      <li><a href="#" data-gameid="<%= g.id %>"><%=g.drawName + "->" + g.answerName %></a></li>
+      <h3><a href="#" class="gamestart" data-gameid="<%= g.id %>"><%=g.drawName + "->" + g.answerName %></a></h3>
     <% }
     }
      %>
-  </ul>
-	<% if(typeof user !== "undefined" && user && user.id && user.name){ %>
-    <a class="btn btn-primary btn-large" id="startgamebtn" href="/games/add">Start a new Game</a>
-  <% } %>
+  <span>Start a new game </span>
+  <input type="text" class="span3" id="friendTypeahead" data-items="4" >
+  <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
 </div>
 <div id="drawarea" class="hero-unit none">
     <h2 id="wordtitle"></h2>
