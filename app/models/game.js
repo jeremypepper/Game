@@ -36,5 +36,23 @@ Game.someStaticMethod = function () {
 Game.someStaticProperty = 'YYZ';
 */
 
+Game.prototype.getOtherUserId = function(myUserId){
+  if(this.drawFriend != myUserId){
+    return this.drawFriend;
+  }
+  else{
+    return this.answerFriend;
+  }
+};
+
+Game.prototype.getOtherUserName = function(myUserId){
+  if(this.drawFriend != myUserId){
+    return this.drawName;
+  }
+  else{
+    return this.answerName;
+  }
+};
+
 Game = geddy.model.register('Game', Game);
 

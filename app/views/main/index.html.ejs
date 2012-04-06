@@ -11,17 +11,27 @@
 </div>
 <% if(games && isLoggedIn){ %>
 <div class="hero-unit" id="games">
-	<h2>Games</h2>
-    
+  <header class="jumbotron subhead">
+	 <h1>Games</h1>
+   <p>Choose a game below or start a new game.</p>
+  </header>
+  <div>
     <%  for(var i=0; i < games.length; i++){ 
       var g = games[i];  
     %>
-      <h3><a href="#" class="gamestart" data-gameid="<%= g.id %>"><%=g.drawName + "->" + g.answerName %></a></h3>
+      <h2>
+        <a href="#" class="gamestart" data-gameid="<%= g.id %>">
+          <img src="http://graph.facebook.com/<%=g.getOtherUserId(user.id)%>/picture"/>
+          <span><%=g.getOtherUserName(user.id)%></span>
+        </a>
+      </h2>
     <% } %>
-    
-  <span>Start a new game </span>
-  <input type="text" class="span3" id="friendTypeahead" data-items="4" >
-  <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
+  </div>
+  <div class="startnewgame">
+    <h3>Start a new game </h3>
+    <input type="text" class="span3" id="friendTypeahead" data-items="4" placeholder="Enter a name...">
+    <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
+  <div>
 </div>
 <%}%>
 <div id="drawarea" class="hero-unit none">

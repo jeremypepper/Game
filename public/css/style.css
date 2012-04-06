@@ -76,3 +76,37 @@ transition-property: opacity;
   transition-duration: 5s;
   opacity: 0;
 }
+
+#games h2
+{
+  display: inline-block;
+  margin: 10px 15px 10px 2px;
+}
+
+.gamestart
+{
+  padding: 30px 5px 0 0;
+}
+
+.gamestart a{
+  text-decoration:none;
+}
+a.gamestart:hover
+{
+  text-decoration:none;
+}
+.gamestart span
+{
+    position: relative;  
+   top:0;
+   transition:top 1s;
+  -moz-transition:top 1s; /* Firefox 4 */
+  -webkit-transition:top 1s; /* Safari and Chrome */
+  -o-transition:top 1s; /* Opera */
+}
+
+a.gamestart:hover span{
+  
+  color: black;
+  top:-35px;
+}
