@@ -13,18 +13,19 @@ var Main = function () {
 		var gotUserCallback = function(user){
 			result.user = user;
 			if(user){
-				geddy.model.adapter.Game.load(
-					function(game){
-						return game.drawFriend == user.id || game.answerFriend == user.id;
-					},
-					function(games){
-						// for now, show all games
-						// bug here
-						result.games = geddy.games;
-						done();
-					},
-					true
-				);
+            geddy.db.LoadGamesByUserId( user.id,
+               function( games )
+               {
+                  if( games === null )
+                     geddy.log.error( "Failed to get games from: " + user.id );
+                  else
+                  {
+                     geddy.games = games;
+                     result.games = geddy.games;
+                  }
+
+                  done();
+               });
 			}
 			else{
 				result.games = {};
@@ -169,7 +170,7 @@ var Main = function () {
 		// HOLY CRAP WIPES THE DB
 		if(req.method === 'POST')
 		{
-			// WIPE DB HERE
+			geddy.db.DropDatabase();
 			geddy.log.info("wiping db")
 		}
 
