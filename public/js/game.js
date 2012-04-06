@@ -151,8 +151,8 @@ function drawSection(point,lastPoint){
 }
 function drawIt(drawData) {
 	var ctx = $canvas[0].getContext('2d'),
-		timeOffset = 0,
-		timeStep = 20;
+		timeOffset = 1500,
+		timeStep = 40;
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, 10000, 10000);
 
@@ -196,6 +196,12 @@ $(document).ready(function(){
 			}
 		});
 	}
+
+	if(access_token)
+	{
+		setupTypeahead();
+	}
+
 	$("#friendTypeaheadOK").click(function(){
 		var friend = friendLookup[$friendTypeahead.val()];
 		createGame(friend.id, friend.name);
