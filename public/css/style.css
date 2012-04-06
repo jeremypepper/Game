@@ -99,14 +99,19 @@ a.gamestart:hover
 {
     position: relative;  
    top:0;
-   transition:top 1s;
-  -moz-transition:top 1s; /* Firefox 4 */
-  -webkit-transition:top 1s; /* Safari and Chrome */
-  -o-transition:top 1s; /* Opera */
+   transition:top .3s;
+  -moz-transition:top .3s; /* Firefox 4 */
+  -webkit-transition:top .3s; /* Safari and Chrome */
+  -o-transition:top .3s; /* Opera */
 }
 
 a.gamestart:hover span{
   
   color: black;
   top:-35px;
+}
+
+.startnewgame
+{
+  clear: both;
 }

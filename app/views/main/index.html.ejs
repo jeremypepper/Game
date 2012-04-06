@@ -19,7 +19,7 @@
     <%  for(var i=0; i < games.length; i++){ 
       var g = games[i];  
     %>
-      <h2>
+      <h2 class="span4">
         <a href="#" class="gamestart" data-gameid="<%= g.id %>">
           <img src="http://graph.facebook.com/<%=g.getOtherUserId(user.id)%>/picture"/>
           <span><%=g.getOtherUserName(user.id)%></span>
@@ -27,6 +27,7 @@
       </h2>
     <% } %>
   </div>
+  
   <div class="startnewgame">
     <h3>Start a new game </h3>
     <input type="text" class="span3" id="friendTypeahead" data-items="4" placeholder="Enter a name...">
