@@ -74,7 +74,7 @@ function createGame(answerFriend,answerName){
 }
 
 function startGame(game){
-	$("#wordtitle").text(game.drawName + "->" + game.answerName);
+	$("#wordtitle").text(game.drawName + "->" + game.answerName + "| " + game.word);
 	var $drawarea = $("#drawarea");
 	var $games = $("#games");
 	$games.slideUp(500,function(){$drawarea.slideDown(500)})
@@ -210,5 +210,23 @@ $(document).ready(function(){
 		e.preventDefault();
 		setupTypeahead();
 		$("#friendTypeaheadForm").show();
+	});
+	$("#answerinput").keyup(function()
+	{
+		var $drawarea = $("#drawarea");
+		var game = $drawarea.data("game");
+		$this = $(this);
+		var text = $this.val();
+		var className = "error";
+		if(text === game.word)
+		{
+			className="success"
+		}
+		if(text == "")
+		{
+			className = "";
+		}
+
+		$this.parent(".control-group").attr("class", "control-group " + className);
 	});
 });

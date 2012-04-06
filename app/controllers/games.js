@@ -27,6 +27,7 @@ var Games = function () {
       }
 
       // Save the resource, then display index page
+      var word = geddy.wordlist.getWord();
       var game = geddy.model.Game.create(
       {
         id: geddy.string.uuid(10),
@@ -35,7 +36,9 @@ var Games = function () {
         //todo: verify that this is an actual friend of the user
         answerFriend:params.answerFriend,
         answerName:params.answerName,
-        state: 0
+        state: 0,
+        word: word.word,
+        difficulty: word.difficulty
       });
 
       geddy.log.info("is game valid " + game.isValid());
@@ -92,12 +95,15 @@ var Games = function () {
       if(!game)
       {
         // Save the resource, then display index page
+        var word = geddy.wordlist.getWord();
         game = geddy.model.Game.create(
         { 
           id: geddy.string.uuid(10),
           drawFriend: params.drawFriend,
           answerFriend:params.answerFriend,
-          state: 0
+          state: 0,
+          word: word.word,
+          difficulty: word.difficulty
         });
 
         geddy.log.info("create game is: "+game);

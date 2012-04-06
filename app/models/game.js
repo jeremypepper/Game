@@ -7,6 +7,8 @@ var Game = function () {
   , answerName:   {type: 'string', required: true}
   , state:   {type: 'number', required: true}
   , drawData: {type: 'string', required: false}
+  , word: {type: 'string', required: true}
+  , difficulty: {type: 'int', required: true}
   });
   
   this.validatesPresent('id');
@@ -16,6 +18,7 @@ var Game = function () {
   this.validatesLength('answerFriend', {min: 2});
   this.validatesPresent('drawName');
   this.validatesPresent('answerName');
+  this.validatesPresent('word');
   this.validatesWithFunction('state', function (status) {
   	return status === 0 || status === 1 || status === 2;
   });
