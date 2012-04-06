@@ -22,6 +22,8 @@ router.match('/').to({controller: 'Main', action: 'index'});
 router.match('/gamesAndFriends').to({controller: 'Main', action: 'gamesAndFriends'});
 router.match('/return').to({controller: 'Main', action: 'returnFromFacebook'});
 router.match('/connectToFacebook').to({controller: 'Main', action: 'connectToFacebook'});
+router.match('/wipe', 'get').to({controller: 'Main', action: 'wipe'});
+router.match('/wipe', 'post').to({controller: 'Main', action: 'wipe'});
 // Basic routes
 // router.match('/moving/pictures/:id').to(
 //    {controller: 'Moving', action: 'pictures'});

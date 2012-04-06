@@ -164,6 +164,18 @@ var Main = function () {
 			done({error:errormsg});
 		}
 	};
+
+	this.wipe =function(req,resp,params){
+		// HOLY CRAP WIPES THE DB
+		if(req.method === 'POST')
+		{
+			// WIPE DB HERE
+			geddy.log.info("wiping db")
+		}
+
+		geddy.log.info("wipe")
+		this.respond({}, {	format: 'html', template: 'app/views/main/wipe'});
+	};
 };
 
 exports.Main = Main;
