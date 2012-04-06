@@ -62,3 +62,17 @@ canvas{
   left: -25px;
   margin-top: -3px;
 }
+
+.fadeout
+{
+transition-property: opacity;
+  transition-duration: 5s;
+  opacity: 1;
+}
+
+.fadein
+{
+  transition-property: opacity;
+  transition-duration: 5s;
+  opacity: 0;
+}

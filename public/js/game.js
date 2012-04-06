@@ -75,7 +75,10 @@ function createGame(answerFriend,answerName){
 
 function startGame(game){
 	$("#wordtitle").text(game.drawName + "->" + game.answerName);
-	$("#drawarea").show().data("game",game);
+	var $drawarea = $("#drawarea");
+	var $games = $("#games");
+	$games.slideUp(500,function(){$drawarea.slideDown(500)})
+	$drawarea.data("game",game);
 	if(game.drawData)
 	{
 		isCanvasEnabled = false;
