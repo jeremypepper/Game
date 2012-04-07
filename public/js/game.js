@@ -16,47 +16,6 @@ function fbGetFriends(cb){
 	$.getJSON(url+"&callback=?",cb)
 }
 
-// fbGetMe(function(user){
-// 	if(user.name){
-// 		name = user.name;
-// 		userid = user.id;
-// 		$("#navlogin").empty()
-// 			.append("<img src='http://graph.facebook.com/" + userid + "/picture'/>")
-// 			.append("<span>"+ name+"</span>");
-// 		fbGetFriends(function(friends){
-// 			var $friendsDiv = $("#friends").empty();
-// 			for (var i = 0; i < friends.data.length; i++) {
-// 				var friend = friends.data[i];
-// 				$friendsDiv.append($("<li>")
-// 					.append($("<a href='#drawarea'>")
-// 						.append("<img src='http://graph.facebook.com/" + friend.id + "/picture'/>")
-// 						.append("<span>"+ friend.name+"</span>"))
-// 				);
-// 			}
-// 		});
-// 	}
-// });
-function getUsers(){
-	// actually get games and users
-	$.getJSON("/gamesAndFriends",function(data){
-		$("#friends").empty();
-		for (var i = 0; i < data.friends.length; i++) {
-			var user = data.friends[i];
-			$("#friends").append($("<li><a href='#drawarea'>"+user.name +"</a></li>"));
-		};
-		
-		$("#games").empty();
-		for (var i = 0; i < data.games.length; i++) {
-			var game = data.games[i];
-			var $li = $("<li>");
-			var $a = $("<a href='#drawarea'>"+game.drawFriend +" -> "+ game.answerFriend +"</a>").data("game", game);
-			$li.append($a);
-			$("#games").append($li);
-				
-		};
-	});
-}
-
 function createGame(answerFriend,answerName){
 	var postMessage ={
 		  		answerFriend: answerFriend,

@@ -5,8 +5,6 @@ if (geddy.config.environment != 'development') {
   });
 }
 
-geddy.games = [];
-geddy.users = [];
 geddy.model.adapter = {};
 geddy.model.adapter.Game = require(process.cwd() + '/lib/model_adapters/game').Game;
 geddy.model.adapter.User = require(process.cwd() + '/lib/model_adapters/user').User;
@@ -22,6 +20,3 @@ geddy.commonController = require(process.cwd() + '/lib/commonController').Common
 
 var words = require(process.cwd() + '/config/words').Words;
 geddy.wordlist = require(process.cwd() + '/lib/utils/wordlist').WordList(words);
-
-geddy.log.info("Game")
-geddy.log.info(geddy.model.Game)

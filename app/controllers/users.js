@@ -1,41 +1,56 @@
 
-var Users = function () {
-  this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
+var Users = function()
+{
+   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
-  this.index = function (req, resp, params) {
-    this.respond({users: geddy.users});
-  };
+   this.index = function( req, resp, params )
+   {
+      var self = this;
+      geddy.db.LoadAllUsers( 
+         function( usersDB )
+         {
+            self.respond( { users: usersDB } );
+         }
+      );
+   };
 
-  this.add = function (req, resp, params) {
-    this.respond({params: params});
-  };
+   this.add = function( req, resp, params )
+   {
+      this.respond( { params: params } );
+   };
 
-  this.create = function (req, resp, params) {
-     // Save the resource, then display index page
-    var user = geddy.model.User.create({ id: params.name, name: params.name});
-    geddy.model.User.save( user );
-    this.redirect({controller: this.name});
-  };
+   this.create = function( req, resp, params )
+   {
+      // Save the resource, then display index page
+      var user = geddy.model.User.create( { id: params.name, name: params.name } );
+      geddy.model.User.save( user );
+      this.redirect( { controller: this.name } );
+   };
 
-  this.show = function (req, resp, params) {
-    var self = this;
-    geddy.model.User.load(params.id,function(game){
-      self.respond({user:game});
-    });
-  };
+   this.show = function( req, resp, params )
+   {
+      var self = this;
+      geddy.model.User.load( params.id, function( game )
+      {
+         self.respond( { user: game } );
+      } );
+   };
 
-  this.edit = function (req, resp, params) {
-    this.respond({params: params});
-  };
+   this.edit = function( req, resp, params )
+   {
+      this.respond( { params: params } );
+   };
 
-  this.update = function (req, resp, params) {
-    // Save the resource, then display the item page
-    this.redirect({controller: this.name, id: params.id});
-  };
+   this.update = function( req, resp, params )
+   {
+      // Save the resource, then display the item page
+      this.redirect( { controller: this.name, id: params.id } );
+   };
 
-  this.remove = function (req, resp, params) {
-    this.respond({params: params});
-  };
+   this.remove = function( req, resp, params )
+   {
+      this.respond( { params: params } );
+   };
 
 };
 
