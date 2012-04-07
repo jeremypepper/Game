@@ -10,29 +10,29 @@
  
 </div>
 <% if(games && isLoggedIn){ %>
-<div class="hero-unit" id="games">
-  <header class="jumbotron subhead">
-	 <h1>Games</h1>
-   <p>Choose a game below or start a new game.</p>
-  </header>
-  <div>
-    <%  for(var i=0; i < games.length; i++){ 
-      var g = games[i];
-    %>
-      <h2 class="span4">
-        <a href="#" class="gamestart" data-gameid="<%= geddy.model.Game.prototype.getOtherUserId.call(g, g.id) %>">
-          <span><%=geddy.model.Game.prototype.getOtherUserName(g,user.id)%></span>
-        </a>
-      </h2>
-    <% } %>
-  </div>
+  <div class="hero-unit" id="games">
+    <header class="jumbotron subhead">
+  	 <h1>Games</h1>
+     <p>Choose a game below or start a new game.</p>
+    </header>
+    <div>
+      <%  for(var i=0; i < games.length; i++){ 
+        var g = games[i];
+      %>
+        <h2 class="span4">
+          <a href="#" class="gamestart" data-gameid="<%= geddy.model.Game.prototype.getOtherUserId.call(g, g.id) %>">
+            <span><%=geddy.model.Game.prototype.getOtherUserName(g,user.id)%></span>
+          </a>
+        </h2>
+      <% } %>
+    </div>
 
-  <div class="startnewgame">
-    <h3>Start a new game </h3>
-    <input type="text" class="span3" id="friendTypeahead" data-items="4" placeholder="Enter a name...">
-    <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
-  <div>
-</div>
+    <div class="startnewgame">
+      <h3>Start a new game </h3>
+      <input type="text" class="span3" id="friendTypeahead" data-items="4" placeholder="Enter a name...">
+      <input type="button" class="btn btn-primary" id="friendTypeaheadOK" value="OK"/>
+    </div>
+  </div>
 <%}%>
 <div id="drawarea" class="hero-unit none">
     <h2 id="wordtitle"></h2>
