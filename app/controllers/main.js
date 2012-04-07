@@ -74,7 +74,6 @@ var Main = function () {
 			   else {
 			      var me = data;
 			      geddy.model.User.load(me.id, token, function (user) {
-			         geddy.log.debug("Got user: " + JSON.stringify(user));
 			         if (!user) {
 			            // dont have this user yet, need to create a new one
 			            // todo: replace expires with now + expires
