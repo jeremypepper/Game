@@ -22,5 +22,3 @@ geddy.commonController = require(process.cwd() + '/lib/commonController').Common
 
 var words = require(process.cwd() + '/config/words').Words;
 geddy.wordlist = require(process.cwd() + '/lib/utils/wordlist').WordList(words);
-
-geddy.log.info("getOtherUserId: " +geddy.model.Game.getOtherUserId);

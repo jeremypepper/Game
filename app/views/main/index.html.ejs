@@ -19,7 +19,7 @@
       <%  for(var i=0; i < games.length; i++){ 
         var g = games[i];
       %>
-          <a href="#" class="gamestart span4" data-gameid="<%= geddy.model.Game.getOtherUserId(g, g.id) %>">
+          <a href="#" class="gamestart span2" data-gameid="<%= geddy.model.Game.getOtherUserId(g, g.id) %>">
             <img src="http://graph.facebook.com/<%=geddy.model.Game.getOtherUserId(g,user.id)%>/picture"/> 
             <span><%=geddy.model.Game.getOtherUserName(g,user.id)%></span>
           </a>
