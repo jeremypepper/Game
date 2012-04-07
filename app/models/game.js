@@ -26,7 +26,7 @@ var Game = function () {
 
 
 geddy.log.info("getOtherUserId: " + Game.getOtherUserId);
-
+Game = geddy.model.register('Game', Game);
 // static functions must be declared after registering
 Game.getOtherUserId = function(game, myUserId){
   if(game.drawFriend != myUserId){

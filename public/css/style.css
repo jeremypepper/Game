@@ -107,9 +107,13 @@ a.gamestart:hover
   text-decoration:none;
   background-image: linear-gradient(left , #E3E3E3 0%, #f5f5f5 77%);
   background-image: -webkit-linear-gradient(left , #E3E3E3 0%, #f5f5f5 77%);
+  background-image: -o-linear-gradient(left , #E3E3E3 0%, #f5f5f5 77%);
+  background-image: -moz-linear-gradient(left , #E3E3E3 0%, #f5f5f5 77%);
+  background-image: -ms-linear-gradient(left , #E3E3E3 0%, #f5f5f5 77%);
   border: 1px solid #999;
   box-shadow: 3px 3px 15px #333;
 }
+
 .gamestart span
 {
     display: block;
