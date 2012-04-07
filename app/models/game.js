@@ -24,35 +24,25 @@ var Game = function () {
   });
 };
 
-/*
-// Can also define them on the prototype
-Game.prototype.someOtherMethod = function () {
-  // Do some other stuff
-};
-// Can also define static methods and properties
-Game.someStaticMethod = function () {
-  // Do some other stuff
-};
-Game.someStaticProperty = 'YYZ';
-*/
 
-Game.prototype.getOtherUserId = function(myUserId){
-  if(this.drawFriend != myUserId){
-    return this.drawFriend;
+geddy.log.info("getOtherUserId: " + Game.getOtherUserId);
+
+// static functions must be declared after registering
+Game.getOtherUserId = function(game, myUserId){
+  if(game.drawFriend != myUserId){
+    return game.drawFriend;
   }
   else{
-    return this.answerFriend;
+    return game.answerFriend;
   }
 };
 
-Game.prototype.getOtherUserName = function(myUserId){
-  if(this.drawFriend != myUserId){
-    return this.drawName;
+Game.getOtherUserName = function(game, myUserId){
+  if(game.drawFriend != myUserId){
+    return game.drawName;
   }
   else{
-    return this.answerName;
+    return game.answerName;
   }
 };
-
-Game = geddy.model.register('Game', Game);
 

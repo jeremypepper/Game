@@ -119,7 +119,7 @@ window.onmousedown = function () {
 };
 window.onmouseup = function () {
     isDown = 0;
-    lastPoint = [];
+    lastPoint = null;
 };
 $canvas.mousemove(function (e) {
     var offsetX = $canvas.position().left * -1;
