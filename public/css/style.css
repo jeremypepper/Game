@@ -34,17 +34,21 @@ div.none,span.none
   display: none;
 }
 
-canvas{
+canvas
+{
   border:1px black solid;
   cursor:crosshair;
+  background:white;
 }
 #drawtools a
 {
-  width:20px;
-  height:10px;
+  width:25px;
+  height:20px;
   border:1px #EEE solid;
-  display:block;
+  margin:5px;
+  display:inline-block;
 }
+
 #red
 {
   background-color:red;
@@ -89,6 +93,7 @@ a.gamestart
   overflow: hidden;
   display: block;
   height:50px;
+  border-radius: 5px;
 }
 a.gamestart img
 {
@@ -108,8 +113,7 @@ a.gamestart:hover
 .gamestart span
 {
     display: block;
-    margin-left: 55px;
-   top:0;
+    margin: 5px 0 0 55px;
    transition:color .5s;
   -moz-transition:color .5s; /* Firefox 4 */
   -webkit-transition:color .5s; /* Safari and Chrome */

@@ -134,15 +134,6 @@ $canvas.mousemove(function (e) {
     }
 });
 
-$("#complete").click(function(e){
-	e.preventDefault();
-	var game = $("#drawarea").data("game");
-	$.ajax("/games/update?id="+game.id, 
-		{ data: {drawData: JSON.stringify(buffer)},
-		  type: "PUT"
-		});
-});
-
 function drawSection(point,lastPoint){
 	ctx.beginPath();
     ctx.moveTo(lastPoint[0], lastPoint[1]);
@@ -181,6 +172,8 @@ $(document).ready(function(){
 	var friendNames = [];
 	var friendLookup = [];
 	var $friendTypeahead = $("#friendTypeahead");
+	var $drawarea = $("#drawarea");
+	var $games = $("#games");
 	function setupTypeahead(){
 		fbGetFriends(function(friends){
 			if(friends && !friends.error){
@@ -197,6 +190,10 @@ $(document).ready(function(){
 		});
 	}
 
+	function showGames(){
+		$drawarea.slideUp(500,function(){$games.slideDown(500)})
+	}
+
 	if(access_token)
 	{
 		setupTypeahead();
@@ -206,14 +203,15 @@ $(document).ready(function(){
 		var friend = friendLookup[$friendTypeahead.val()];
 		createGame(friend.id, friend.name);
 	});
+
 	$("#startgamebtn").click(function(e){
 		e.preventDefault();
 		setupTypeahead();
 		$("#friendTypeaheadForm").show();
 	});
+
 	$("#answerinput").keyup(function()
 	{
-		var $drawarea = $("#drawarea");
 		var game = $drawarea.data("game");
 		$this = $(this);
 		var text = $this.val();
@@ -228,5 +226,22 @@ $(document).ready(function(){
 		}
 
 		$this.parent(".control-group").attr("class", "control-group " + className);
+	});
+
+	$("#back").click(function(){
+		showGames();
+	});
+
+	$("#complete").click(function(e){
+		e.preventDefault();
+		var game = $("#drawarea").data("game");
+
+		//todo handle err
+		$.ajax("/games/update?id="+game.id, 
+			{   data: {"drawData": JSON.stringify(buffer)}
+			  , type: "PUT"
+			  , complete:showGames
+			});
+
 	});
 });

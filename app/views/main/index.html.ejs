@@ -19,7 +19,7 @@
       <%  for(var i=0; i < games.length; i++){ 
         var g = games[i];
       %>
-          <a href="#" class="gamestart span2" data-gameid="<%= geddy.model.Game.getOtherUserId(g, g.id) %>">
+          <a href="#" class="gamestart span2" data-gameid="<%= g.id %>">
             <img src="http://graph.facebook.com/<%=geddy.model.Game.getOtherUserId(g,user.id)%>/picture"/> 
             <span><%=geddy.model.Game.getOtherUserName(g,user.id)%></span>
           </a>
@@ -34,10 +34,11 @@
   </div>
 <%}%>
 <div id="drawarea" class="hero-unit none">
+    <a href="#" id="back" class="btn">back</a>
     <h2 id="wordtitle"></h2>
-    <canvas width="320" height="240" id="thecanvas"></canvas>
+    <canvas width="480" height="360" id="thecanvas"></canvas>
     <div id="drawtools" class="none">
-        <a id="red" href="#"></a><a id="blue" href="#"></a><a id="complete" href="#">complete</a>
+        <a id="red" href="#"></a><a id="blue" href="#"></a><input type="button" id="complete" class="btn" href="#" value="complete"/>
     </div>
     <form>
       <div class="control-group">
