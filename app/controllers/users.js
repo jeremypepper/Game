@@ -13,7 +13,7 @@ var Users = function () {
   this.create = function (req, resp, params) {
      // Save the resource, then display index page
     var user = geddy.model.User.create({ id: params.name, name: params.name});
-    user.save();
+    geddy.model.User.save( user );
     this.redirect({controller: this.name});
   };
 
