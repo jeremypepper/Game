@@ -30,7 +30,8 @@ var Users = function()
    this.show = function( req, resp, params )
    {
       var self = this;
-      geddy.model.User.load( params.id, function( game )
+      geddy.log.debug( "params: " + JSON.stringify( params ) );
+      geddy.model.User.load( params.id, null, function( game )
       {
          self.respond( { user: game } );
       } );
