@@ -17,13 +17,11 @@
   </header>
   <div>
     <%  for(var i=0; i < games.length; i++){ 
-      var g = games[i];  
+      var g = games[i];
     %>
       <h2 class="span4">
-        <a href="#" class="gamestart" data-gameid="<%= g.id %>">
-          <!-- Hey Jeremy fix this
-          <img src="http://graph.facebook.com/<%=g.getOtherUserId(user.id)%>/picture"/> -->
-          <span><%=g.getOtherUserName(user.id)%></span>
+        <a href="#" class="gamestart" data-gameid="<%= geddy.model.Game.prototype.getOtherUserId.call(g, g.id) %>">
+          <span><%=geddy.model.Game.prototype.getOtherUserName(g,user.id)%></span>
         </a>
       </h2>
     <% } %>
